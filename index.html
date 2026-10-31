@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚂 قطار النون السحري - مغامرة التحدي</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Tahoma', sans-serif; }
+  
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #87ceeb 0%, #b3e5fc 40%, #c8e6c9 70%, #8d6e63 100%);
+    overflow-x: hidden;
+    padding: 10px;
+    position: relative;
+  }
+  
+  /* غيوم متحركة */
+  .cloud {
+    position: fixed;
+    font-size: 3em;
+    opacity: 0.7;
+    z-index: 0;
+    animation: cloudMove 40s linear infinite;
+  }
+  
+  .cloud:nth-child(1) { top: 8%; animation-duration: 45s; }
+  .cloud:nth-child(2) { top: 18%; animation-duration: 60s; animation-delay: 10s; }
+  .cloud:nth-child(3) { top: 25%; animation-duration: 50s; animation-delay: 20s; }
+  
+  @keyframes cloudMove {
+    from { transform: translateX(-15vw); }
+    to { transform: translateX(115vw); }
+  }
+  
+  /* الشمس */
+  .sun {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    font-size: 5em;
+    animation: sunRotate 20s linear infinite;
+    z-index: 0;
+    filter: drop-shadow(0 0 20px #ffd600);
+  }
+  
+  @keyframes sunRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: rgba(255, 248, 225, 0.97);
+    border-radius: 30px;
+    padding: 25px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+    border: 8px solid #c62828;
+    position: relative;
+    z-index: 1;
+    background-image: 
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(198,40,40,0.05) 40px, rgba(198,40,40,0.05) 42px);
+  }
+  
+  /* الترويسة - شكل تذكرة القطار */
+  .main-header {
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    border: 5px solid #ffd600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  
+  .main-header::before, .main-header::after {
+    content: '🎫';
+    position: absolute;
+    font-size: 2em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .main-header::before { right: 20px; }
+  .main-header::after { left: 20px; }
+  
+  h1 {
+    font-size: 2.8em;
+    text-shadow: 4px 4px 0 #ffd600, 8px 8px 20px rgba(0,0,0,0.4);
+    margin: 10px 0;
+    animation: trainShake 3s infinite;
+  }
+  
+  @keyframes trainShake {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-3px) rotate(-0.5deg); }
+    75% { transform: translateX(3px) rotate(0.5deg); }
+  }
+  
+  .train-emoji {
+    font-size: 4em;
+    display: inline-block;
+    animation: trainMove 2s infinite;
+  }
+  
+  @keyframes trainMove {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+  }
+  
+  .slogan {
+    font-size: 1.2em;
+    color: #ffd600;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    margin-top: 5px;
+  }
+  
+  .screen { display: none; animation: screenIn 0.6s; }
+  .screen.active { display: block; }
+  
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  /* ============ شاشة البداية ============ */
+  .welcome-box { text-align: center; padding: 20px; }
+  
+  .ticket-display {
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+    border: 4px dashed #c62828;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  
+  .ticket-display::before, .ticket-display::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #fff8e1;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .ticket-display::before { right: -15px; }
+  .ticket-display::after { left: -15px; }
+  
+  .ticket-title {
+    font-size: 1.8em;
+    color: #c62828;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .ticket-info {
+    font-size: 1.1em;
+    color: #5d4037;
+    line-height: 1.8;
+  }
+  
+  .train-scene {
+    background: linear-gradient(180deg, #81d4fa 0%, #a5d6a7 100%);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 700px;
+    border: 4px solid #5d4037;
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+  }
+  
+  .train-scene::after {
+    content: '';
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #5d4037 0, #5d4037 20px, transparent 20px, transparent 40px);
+  }
+  
+  .train-parade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 3em;
+    animation: trainParade 3s infinite;
+  }
+  
+  @keyframes trainParade {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(15px); }
+  }
+  
+  .difficulty-selector {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 700px;
+    border: 4px solid #1976d2;
+  }
+  
+  .difficulty-title {
+    font-size: 1.4em;
+    color: #0d47a1;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .difficulty-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .diff-btn {
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 3px solid;
+    background: white;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s;
+    min-width: 130px;
+  }
+  
+  .diff-btn:hover { transform: translateY(-3px); }
+  
+  .diff-btn.active {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  
+  .diff-easy { border-color: #43a047; color: #2e7d32; }
+  .diff-easy.active { background: #43a047; color: white; }
+  
+  .diff-medium { border-color: #fb8c00; color: #e65100; }
+  .diff-medium.active { background: #fb8c00; color: white; }
+  
+  .diff-hard { border-color: #e53935; color: #b71c1c; }
+  .diff-hard.active { background: #e53935; color: white; }
+  
+  .players-setup {
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 700px;
+    border: 4px solid #ff6f00;
+  }
+  
+  .setup-title {
+    font-size: 1.5em;
+    color: #c62828;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .player-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 15px;
+    border: 3px solid #ff6f00;
+  }
+  
+  .player-input-row input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1.1em;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+  }
+  
+  .player-input-row input:focus { border-color: #c62828; }
+  
+  .player-avatar { font-size: 2em; }
+  
+  .btn {
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.4em;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #5d0000, 0 12px 25px rgba(0,0,0,0.3);
+    transition: all 0.15s;
+    margin: 10px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+  
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 11px 0 #5d0000, 0 15px 30px rgba(0,0,0,0.3); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 3px 0 #5d0000; }
+  
+  .btn-blue { background: linear-gradient(135deg, #1976d2, #0d47a1); box-shadow: 0 8px 0 #01579b, 0 12px 25px rgba(0,0,0,0.3); }
+  .btn-blue:active { box-shadow: 0 3px 0 #01579b; }
+  .btn-green { background: linear-gradient(135deg, #43a047, #2e7d32); box-shadow: 0 8px 0 #1b5e20, 0 12px 25px rgba(0,0,0,0.3); }
+  .btn-green:active { box-shadow: 0 3px 0 #1b5e20; }
+  .btn-gold { background: linear-gradient(135deg, #ffd600, #ff6f00); color: #5d4037; box-shadow: 0 8px 0 #e65100, 0 12px 25px rgba(0,0,0,0.3); }
+  .btn-gold:active { box-shadow: 0 3px 0 #e65100; }
+  .btn-small { padding: 10px 20px; font-size: 1em; }
+  
+  /* ============ شاشة اللعبة ============ */
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .player-score-card {
+    background: linear-gradient(135deg, #fff, #fff9c4);
+    padding: 12px;
+    border-radius: 20px;
+    text-align: center;
+    border: 4px solid #ff6f00;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .player-score-card.active {
+    transform: scale(1.08);
+    border-color: #c62828;
+    box-shadow: 0 0 30px #ffd600, 0 10px 30px rgba(0,0,0,0.3);
+    animation: activePulse 1s infinite alternate;
+    z-index: 2;
+  }
+  
+  @keyframes activePulse {
+    from { box-shadow: 0 0 20px #ffd600, 0 10px 30px rgba(0,0,0,0.3); }
+    to { box-shadow: 0 0 40px #ff6f00, 0 10px 40px rgba(0,0,0,0.4); }
+  }
+  
+  .p-avatar { font-size: 2em; display: block; }
+  .p-name { font-size: 1.1em; font-weight: bold; color: #5d4037; margin: 3px 0; }
+  .p-score { font-size: 2em; color: #c62828; font-weight: bold; text-shadow: 2px 2px 0 #ffd600; }
+  .p-tickets { font-size: 0.9em; color: #ff6f00; }
+  
+  /* خريطة السكة الحديد */
+  .railway-map {
+    background: linear-gradient(135deg, #8d6e63, #6d4c41);
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 4px solid #3e2723;
+    position: relative;
+  }
+  
+  .railway-title {
+    text-align: center;
+    color: #ffd600;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  }
+  
+  .railway-track {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 15px 0;
+  }
+  
+  .railway-track::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 30px; right: 30px;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #5d4037 0, #5d4037 15px, #ffd600 15px, #ffd600 17px, #5d4037 17px, #5d4037 30px);
+    transform: translateY(-50%);
+    border-top: 2px solid #3e2723;
+    border-bottom: 2px solid #3e2723;
+    z-index: 0;
+  }
+  
+  .station {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #5d4037;
+    position: relative;
+    z-index: 2;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #5d4037;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .station-icon { font-size: 1.8em; }
+  
+  .station.passed {
+    background: #43a047;
+    color: white;
+    border-color: #1b5e20;
+  }
+  
+  .station.current {
+    background: #ffd600;
+    color: #c62828;
+    border-color: #ff6f00;
+    transform: scale(1.25);
+    animation: stationPulse 1s infinite;
+  }
+  
+  @keyframes stationPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,214,0,0.7), 0 4px 10px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 0 0 20px rgba(255,214,0,0), 0 4px 10px rgba(0,0,0,0.3); }
+  }
+  
+  .train-icon {
+    position: absolute;
+    font-size: 2.5em;
+    top: -35px;
+    transition: all 1s ease-in-out;
+    z-index: 3;
+    filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.4));
+  }
+  
+  /* مؤشر اللاعب الحالي */
+  .current-player-banner {
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    color: white;
+    padding: 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border: 4px solid #ffd600;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+  
+  /* معلومات المحطة */
+  .station-header {
+    background: linear-gradient(135deg, #ff6f00, #e65100);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 4px solid #ffd600;
+    position: relative;
+  }
+  
+  .station-number {
+    font-size: 1em;
+    background: #ffd600;
+    color: #c62828;
+    display: inline-block;
+    padding: 3px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .station-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    margin: 5px 0;
+  }
+  
+  .station-desc {
+    font-size: 1em;
+    opacity: 0.95;
+  }
+  
+  .difficulty-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 8px;
+    background: white;
+  }
+  
+  .diff-easy-badge { color: #2e7d32; }
+  .diff-medium-badge { color: #e65100; }
+  .diff-hard-badge { color: #b71c1c; }
+  
+  /* منطقة المحتوى */
+  .station-content {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 380px;
+    border: 4px solid #ff6f00;
+    position: relative;
+  }
+  
+  /* ============ محطة 1: تذكرة الدخول ============ */
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin: 15px 0;
+  }
+  
+  .ticket-card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    border: 4px solid #1976d2;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  .ticket-card:hover { transform: translateY(-5px) scale(1.05); }
+  
+  .ticket-card.selected {
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    border-color: #c62828;
+    transform: scale(1.05);
+  }
+  
+  .ticket-card.correct-pick {
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    border-color: #1b5e20;
+    animation: popCorrect 0.6s;
+  }
+  
+  .ticket-card.wrong-pick {
+    background: #ef5350;
+    border-color: #b71c1c;
+    animation: shake 0.5s;
+  }
+  
+  @keyframes popCorrect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(5deg); }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+  
+  .ticket-emoji { font-size: 3em; display: block; }
+  .ticket-word { font-size: 1.1em; color: #0d47a1; font-weight: bold; margin-top: 5px; }
+  .ticket-card.selected .ticket-word, .ticket-card.correct-pick .ticket-word { color: white; }
+  
+  /* ============ محطة 2: نفق الأصوات ============ */
+  .tunnel-scene {
+    background: linear-gradient(180deg, #263238 0%, #37474f 50%, #455a64 100%);
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+  }
+  
+  .tunnel-scene::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 30px, rgba(255,214,0,0.1) 30px, rgba(255,214,0,0.1) 32px);
+    pointer-events: none;
+  }
+  
+  .sound-word-display {
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 15px auto;
+    max-width: 500px;
+    border: 5px solid #ffd600;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .sound-word {
+    font-size: 4em;
+    color: #c62828;
+    font-weight: bold;
+    text-shadow: 3px 3px 0 #ffd600;
+    letter-spacing: 8px;
+  }
+  
+  .sound-question {
+    font-size: 1.3em;
+    color: #0d47a1;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  
+  .sound-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: 15px auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .sound-option {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: 3px solid #ffd600;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #5d4037;
+    transition: all 0.3s;
+  }
+  
+  .sound-option:hover {
+    transform: scale(1.05);
+    background: #fff9c4;
+  }
+  
+  .sound-option.correct {
+    background: #66bb6a;
+    color: white;
+    border-color: #1b5e20;
+  }
+  
+  .sound-option.wrong {
+    background: #ef5350;
+    color: white;
+    border-color: #b71c1c;
+    animation: shake 0.5s;
+  }
+  
+  /* ============ محطة 3: جسر الألغاز ============ */
+  .riddle-box {
+    background: linear-gradient(135deg, #e1bee7, #ce93d8);
+    padding: 25px;
+    border-radius: 25px;
+    margin: 15px 0;
+    border: 5px solid #6a1b9a;
+    text-align: center;
+    position: relative;
+  }
+  
+  .riddle-icon {
+    font-size: 5em;
+    margin-bottom: 10px;
+    animation: riddleBounce 2s infinite;
+  }
+  
+  @keyframes riddleBounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+  
+  .riddle-text {
+    font-size: 1.4em;
+    color: #4a148c;
+    font-weight: bold;
+    line-height: 1.8;
+    margin: 15px 0;
+  }
+  
+  .riddle-hint {
+    font-size: 1em;
+    color: #6a1b9a;
+    background: rgba(255,255,255,0.7);
+    padding: 8px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 10px 0;
+  }
+  
+  .riddle-input {
+    padding: 12px 20px;
+    font-size: 1.5em;
+    border: 4px solid #6a1b9a;
+    border-radius: 15px;
+    text-align: center;
+    width: 250px;
+    outline: none;
+    background: white;
+    margin: 10px 0;
+  }
+  
+  .riddle-input:focus { border-color: #ffd600; box-shadow: 0 0 15px rgba(255,214,0,0.5); }
+  
+  /* ============ محطة 4: ورشة البناء ============ */
+  .workshop-scene {
+    background: linear-gradient(135deg, #d7ccc8, #bcaaa4);
+    padding: 25px;
+    border-radius: 20px;
+    border: 5px solid #5d4037;
+    position: relative;
+  }
+  
+  .letters-scatter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+  }
+  
+  .scatter-letter {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #5d4037;
+    cursor: pointer;
+    border: 4px solid #5d4037;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .scatter-letter:hover {
+    transform: translateY(-5px) scale(1.1);
+  }
+  
+  .scatter-letter.used {
+    opacity: 0.3;
+    pointer-events: none;
+    transform: scale(0.9);
+  }
+  
+  .scatter-letter.correct-letter {
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    color: white;
+  }
+  
+  .word-slots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  
+  .word-slot {
+    width: 55px;
+    height: 55px;
+    background: white;
+    border: 4px dashed #c62828;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #c62828;
+  }
+  
+  .word-slot.filled {
+    background: #fff9c4;
+    border-style: solid;
+    border-color: #ff6f00;
+  }
+  
+  .word-slot.correct-slot {
+    background: #c8e6c9;
+    border-color: #2e7d32;
+    color: #2e7d32;
+  }
+  
+  .built-word-display {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #c62828;
+    margin: 15px 0;
+    border: 3px solid #ff6f00;
+    min-height: 60px;
+  }
+  
+  /* ============ محطة 5: المحطة النهائية ============ */
+  .final-scene {
+    background: linear-gradient(135deg, #ffd54f, #ff8f00);
+    padding: 25px;
+    border-radius: 25px;
+    border: 6px solid #c62828;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-scene::before {
+    content: '🏆 🏆 🏆';
+    position: absolute;
+    top: 10px;
+    left: 0; right: 0;
+    font-size: 1.5em;
+    letter-spacing: 20px;
+    opacity: 0.4;
+  }
+  
+  .final-timer {
+    font-size: 3.5em;
+    color: white;
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 25px;
+    border: 5px solid #ffd600;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    font-weight: bold;
+  }
+  
+  .final-challenge {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 15px 0;
+    border: 4px solid #c62828;
+  }
+  
+  .final-challenge-title {
+    font-size: 1.3em;
+    color: #c62828;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .final-input-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  
+  .final-input {
+    padding: 10px 15px;
+    font-size: 1.2em;
+    border: 3px solid #c62828;
+    border-radius: 15px;
+    text-align: center;
+    width: 180px;
+    outline: none;
+    background: #fff9c4;
+  }
+  
+  .final-input:focus { border-color: #ffd600; }
+  
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .memory-card {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+    border: 3px solid #ffd600;
+    transition: all 0.4s;
+    position: relative;
+  }
+  
+  .memory-card.flipped {
+    background: white;
+    color: #c62828;
+    transform: rotateY(180deg);
+  }
+  
+  .memory-card.matched {
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    color: white;
+    pointer-events: none;
+    animation: matchPop 0.5s;
+  }
+  
+  @keyframes matchPop {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  .memory-card .card-front,
+  .memory-card .card-back {
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.4s;
+  }
+  
+  .memory-card .card-back {
+    transform: rotateY(180deg);
+  }
+  
+  .memory-card.flipped .card-front { transform: rotateY(180deg); }
+  
+  /* ============ شاشة النتائج ============ */
+  .results-box { text-align: center; padding: 20px; }
+  
+  .final-station {
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    padding: 30px;
+    border-radius: 25px;
+    margin: 20px 0;
+    border: 6px solid #c62828;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-station::before {
+    content: '🚂 محطة النهاية 🏁';
+    position: absolute;
+    top: 10px;
+    left: 0; right: 0;
+    font-size: 1.5em;
+    color: #c62828;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 white;
+  }
+  
+  .big-trophy {
+    font-size: 7em;
+    animation: trophySpin 2s infinite;
+    display: inline-block;
+    margin-top: 30px;
+    filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.3));
+  }
+  
+  @keyframes trophySpin {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+  }
+  
+  .winner-name {
+    font-size: 2.8em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 4px 4px 0 #c62828;
+    margin: 15px 0;
+  }
+  
+  .winner-title {
+    font-size: 1.5em;
+    color: #5d4037;
+    font-weight: bold;
+    background: white;
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin: 10px 0;
+  }
+  
+  .final-ranking {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .rank-card {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 4px solid #c62828;
+    min-width: 140px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  
+  .rank-medal { font-size: 3em; display: block; }
+  .rank-avatar { font-size: 2em; display: block; margin: 5px 0; }
+  .rank-name { font-size: 1.1em; font-weight: bold; color: #5d4037; }
+  .rank-score { font-size: 1.6em; color: #c62828; font-weight: bold; margin-top: 5px; }
+  
+  .special-awards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .award-card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    border: 4px solid;
+    text-align: center;
+  }
+  
+  .award-icon { font-size: 2.5em; display: block; margin-bottom: 5px; }
+  .award-title { font-size: 0.95em; font-weight: bold; color: #5d4037; }
+  .award-winner { font-size: 1.1em; font-weight: bold; margin-top: 5px; }
+  
+  /* تأثيرات */
+  .feedback-popup {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7em;
+    z-index: 1000;
+    pointer-events: none;
+    animation: feedbackPop 1.2s forwards;
+  }
+  
+  @keyframes feedbackPop {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-180deg); }
+    30% { opacity: 1; transform: translate(-50%, -50%) scale(1.5) rotate(0); }
+    100% { opacity: 0; transform: translate(-50%, -150%) scale(1); }
+  }
+  
+  .confetti-piece {
+    position: fixed;
+    width: 12px; height: 12px;
+    pointer-events: none;
+    z-index: 999;
+    animation: confettiFall 3s linear forwards;
+  }
+  
+  @keyframes confettiFall {
+    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  
+  .conductor-msg {
+    background: linear-gradient(135deg, #fff, #fff9c4);
+    padding: 15px;
+    border-radius: 20px;
+    margin: 15px 0;
+    border: 3px solid #c62828;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .conductor-avatar {
+    font-size: 3em;
+    animation: conductorWave 2s infinite;
+  }
+  
+  @keyframes conductorWave {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+  }
+  
+  .conductor-text {
+    flex: 1;
+    font-size: 1.1em;
+    color: #5d4037;
+    font-weight: bold;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .hint-box {
+    background: #fff9c4;
+    border: 2px dashed #ff6f00;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 10px 0;
+    font-size: 1em;
+    color: #e65100;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 700px) {
+    h1 { font-size: 1.8em; }
+    .train-parade { font-size: 2em; }
+    .station { width: 55px; height: 55px; font-size: 0.6em; }
+    .station-icon { font-size: 1.3em; }
+    .station-name { font-size: 1.3em; }
+    .sound-word { font-size: 2.5em; }
+    .memory-grid { grid-template-columns: repeat(3, 1fr); }
+    .scatter-letter { width: 50px; height: 50px; font-size: 1.5em; }
+    .word-slot { width: 45px; height: 45px; font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sun">☀️</div>
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+<div class="cloud">⛅</div>
+
+<div class="container">
+  <div class="main-header">
+    <div class="train-emoji">🚂</div>
+    <h1>قطار النون السحري</h1>
+    <div class="slogan">🎫 تذكرة المغامرة: 5 محطات من التحدي! 🎫</div>
+  </div>
+
+  <!-- ============ شاشة البداية ============ -->
+  <div id="start-screen" class="screen active">
+    <div class="welcome-box">
+      
+      <div class="train-scene">
+        <div class="train-parade">
+          🚂 💨 🚃 🚃 🚃 🚏
+        </div>
+      </div>
+      
+      <div class="ticket-display">
+        <div class="ticket-title">🎫 تذكرتك إلى مغامرة النون</div>
+        <div class="ticket-info">
+          🚂 <strong>الوجهة:</strong> محطة حرف النون<br>
+          🛤️ <strong>المسار:</strong> 5 محطات مليئة بالتحدي<br>
+          🎯 <strong>المهمة:</strong> اجمع أكبر عدد من التذاكر الذهبية<br>
+          🏆 <strong>الجائزة:</strong> لقب "قائد قطار النون"
+        </div>
+      </div>
+      
+      <div class="difficulty-selector">
+        <div class="difficulty-title">⚙️ اختر مستوى التحدي:</div>
+        <div class="difficulty-buttons">
+          <button class="diff-btn diff-easy" onclick="setDifficulty('easy')">
+            🌱 سهل<br><small>للمبتدئين</small>
+          </button>
+          <button class="diff-btn diff-medium active" onclick="setDifficulty('medium')">
+            🔥 متوسط<br><small>للمتوسطين</small>
+          </button>
+          <button class="diff-btn diff-hard" onclick="setDifficulty('hard')">
+            💎 صعب<br><small>للمحترفين</small>
+          </button>
+        </div>
+      </div>
+      
+      <div class="players-setup">
+        <div class="setup-title">👥 ركاب القطار</div>
+        <div id="player-inputs"></div>
+        <button class="btn btn-small btn-blue" onclick="addPlayer()">➕ إضافة راكب</button>
+      </div>
+      
+      <button class="btn btn-gold" onclick="startJourney()">🚂 انطلق يا قطار!</button>
+    </div>
+  </div>
+
+  <!-- ============ شاشة اللعبة ============ -->
+  <div id="game-screen" class="screen">
+    <div class="scoreboard" id="scoreboard"></div>
+    
+    <div class="railway-map">
+      <div class="railway-title">🛤️ خريطة الرحلة</div>
+      <div class="railway-track" id="railway-track">
+        <div class="train-icon" id="train-icon">🚂</div>
+      </div>
+    </div>
+    
+    <div class="current-player-banner" id="current-player-banner"></div>
+    
+    <div class="conductor-msg">
+      <div class="conductor-avatar">🧑‍✈️</div>
+      <div class="conductor-text" id="conductor-msg">أهلاً بكم في قطار النون السحري! استعدوا للمحطة الأولى!</div>
+    </div>
+    
+    <div class="station-header">
+      <div class="station-number" id="station-number">المحطة 1</div>
+      <div class="station-name" id="station-name">تذكرة الدخول</div>
+      <div class="station-desc" id="station-desc">اختر الكلمات التي تبدأ بحرف النون</div>
+      <div class="difficulty-badge" id="difficulty-badge">🔥 متوسط</div>
+    </div>
+    
+    <div class="station-content" id="station-content"></div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-blue" id="next-player-btn" onclick="nextPlayer()" style="display:none;">
+        ➡️ الراكب التالي
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ شاشة النتائج ============ -->
+  <div id="results-screen" class="screen">
+    <div class="results-box">
+      <div class="final-station">
+        <div class="big-trophy">🏆</div>
+        <div class="winner-name" id="winner-name"></div>
+        <div class="winner-title" id="winner-title">👑 قائد قطار النون 👑</div>
+      </div>
+      
+      <div class="final-ranking" id="final-ranking"></div>
+      
+      <div style="font-size:1.5em; color:#c62828; font-weight:bold; margin:20px 0;">
+        🏅 جوائز خاصة 🏅
+      </div>
+      
+      <div class="special-awards" id="special-awards"></div>
+      
+      <button class="btn btn-gold" onclick="location.reload()" style="margin-top:25px;">
+        🔄 رحلة جديدة
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ نظام الأصوات ============
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(freq, duration, type='sine', volume=0.3) {
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch(e) {}
+}
+
+function playCorrect() {
+  playTone(523.25, 0.1, 'triangle', 0.3);
+  setTimeout(() => playTone(659.25, 0.1, 'triangle', 0.3), 80);
+  setTimeout(() => playTone(783.99, 0.1, 'triangle', 0.3), 160);
+  setTimeout(() => playTone(1046.50, 0.25, 'triangle', 0.3), 240);
+}
+
+function playWrong() {
+  playTone(200, 0.15, 'sawtooth', 0.15);
+  setTimeout(() => playTone(150, 0.25, 'sawtooth', 0.15), 120);
+}
+
+function playClick() {
+  playTone(800, 0.04, 'square', 0.08);
+}
+
+function playWin() {
+  const notes = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50, 1318.51];
+  notes.forEach((n, i) => setTimeout(() => playTone(n, 0.2, 'triangle', 0.3), i * 120));
+}
+
+function playStationStart() {
+  // صوت صافرة القطار
+  playTone(440, 0.3, 'sawtooth', 0.2);
+  setTimeout(() => playTone(554.37, 0.3, 'sawtooth', 0.2), 300);
+  setTimeout(() => playTone(659.25, 0.5, 'sawtooth', 0.2), 600);
+}
+
+function playTrainWhistle() {
+  playTone(700, 0.2, 'sawtooth', 0.15);
+  setTimeout(() => playTone(880, 0.4, 'sawtooth', 0.15), 200);
+}
+
+function playTrainWheels() {
+  for (let i = 0; i < 4; i++) {
+    setTimeout(() => playTone(150 + i*20, 0.08, 'square', 0.1), i * 100);
+  }
+}
+
+function playTick() {
+  playTone(1000, 0.03, 'square', 0.1);
+}
+
+function playMatch() {
+  playTone(659.25, 0.1, 'sine', 0.2);
+  setTimeout(() => playTone(880, 0.15, 'sine', 0.2), 80);
+}
+
+// ============ البيانات ============
+// كلمات تبدأ بالنون (سهلة)
+const easyNunWords = [
+  {word: 'نَمِلَة', emoji: '🐜'},
+  {word: 'نَمِر', emoji: '🐯'},
+  {word: 'نَجْم', emoji: '⭐'},
+  {word: 'نَهْر', emoji: '🌊'},
+  {word: 'نَخْلَة', emoji: '🌴'},
+  {word: 'نافِذَة', emoji: '🪟'},
+  {word: 'نار', emoji: '🔥'},
+  {word: 'نَسْر', emoji: '🦅'}
+];
+
+// كلمات تبدأ بالنون (متوسطة)
+const mediumNunWords = [
+  {word: 'نَحْلَة', emoji: '🐝'},
+  {word: 'نَرجِس', emoji: '🌼'},
+  {word: 'نَعناع', emoji: '🌿'},
+  {word: 'نيل', emoji: '🏞️'},
+  {word: 'نُور', emoji: '💡'},
+  {word: 'نَغْمَة', emoji: '🎵'},
+  {word: 'نَبْرَاس', emoji: '🕯️'},
+  {word: 'نَافورَة', emoji: '⛲'},
+  {word: 'نِيزَك', emoji: '☄️'},
+  {word: 'نَشيد', emoji: '🎶'}
+];
+
+// كلمات صعبة تبدأ بالنون
+const hardNunWords = [
+  {word: 'نَبَأ', emoji: '📰'},
+  {word: 'نَسّاج', emoji: '🧵'},
+  {word: 'نَطّاط', emoji: '🦘'},
+  {word: 'نُزُه', emoji: '🚶'},
+  {word: 'نِضال', emoji: '⚔️'},
+  {word: 'نُجْبَة', emoji: '🎓'},
+  {word: 'نَقانِق', emoji: '🌭'},
+  {word: 'نَوَرس', emoji: '🕊️'}
+];
+
+// كلمات لا تبدأ بالنون
+const otherWords = [
+  {word: 'شَمس', emoji: '☀️'}, {word: 'قِطَّة', emoji: '🐱'},
+  {word: 'تُفَّاحَة', emoji: '🍎'}, {word: 'كَلب', emoji: '🐶'},
+  {word: 'بَطَّة', emoji: '🦆'}, {word: 'زَرَافَة', emoji: '🦒'},
+  {word: 'أَسَد', emoji: '🦁'}, {word: 'فِيل', emoji: '🐘'},
+  {word: 'قَمَر', emoji: '🌙'}, {word: 'وَرْدَة', emoji: '🌹'},
+  {word: 'سَمَكَة', emoji: '🐟'}, {word: 'فَرَاشَة', emoji: '🦋'},
+  {word: 'دُبّ', emoji: '🐻'}, {word: 'حِصَان', emoji: '🐴'}
+];
+
+// كلمات تحتوي النون في الوسط
+const middleNunWords = [
+  {word: 'أَنبوب', emoji: '🪈'}, {word: 'سِنجاب', emoji: '🐿️'},
+  {word: 'مِنديل', emoji: '🧻'}, {word: 'كَنز', emoji: '💰'},
+  {word: 'لُؤلُؤ', emoji: '📿'}, {word: 'جُبن', emoji: '🧀'},
+  {word: 'زَنجَبيل', emoji: '🫚'}, {word: 'بِنت', emoji: '👧'},
+  {word: 'سُنبلَة', emoji: '🌾'}, {word: 'عَنبر', emoji: '🟤'}
+];
+
+// ألغاز
+const riddles = {
+  easy: [
+    {icon: '🔥', text: 'أحترق وأضيء، أطبخ عليّ الطعام، ما أنا؟', answer: 'نار', hint: 'تبدأ بحرف النون'},
+    {icon: '⭐', text: 'ألمع في السماء ليلاً، أكون أحياناً على علم الدول، ما أنا؟', answer: 'نجم', hint: 'يبدأ بحرف النون'},
+    {icon: '🐜', text: 'صغيرة أعمل بجد، أحمل أطعمة أكبر مني، ما أنا؟', answer: 'نملة', hint: 'تبدأ بحرف النون'}
+  ],
+  medium: [
+    {icon: '💡', text: 'أضيء الطريق في الظلام، كان الناس يستعملونني قبل الكهرباء، ما أنا؟', answer: 'نبراس', hint: 'كلمة تبدأ بالنون وتعني مصباح'},
+    {icon: '⛲', text: 'أخرج الماء مني إلى الأعلى، أزيّن الحدائق والمنتزهات، ما أنا؟', answer: 'نافورة', hint: 'تبدأ بحرف النون'},
+    {icon: '🌿', text: 'أوراق خضراء رائحتها منعشة، يُصنع مني الشاي، ما أنا؟', answer: 'نعناع', hint: 'يبدأ بحرف النون'}
+  ],
+  hard: [
+    {icon: '☄️', text: 'أسقط من السماء محترقاً، أترك ذيلًا من الضوء ورائي، ما أنا؟', answer: 'نيزك', hint: 'يبدأ بحرف النون'},
+    {icon: '🧵', text: 'أصنع الأقمشة والملابس بخيوط ملونة، مهنتي قديمة جداً، ما أنا؟', answer: 'نساج', hint: 'يبدأ بحرف النون'},
+    {icon: '📰', text: 'أحمل الأخبار والمعلومات، أُطبع كل يوم أو أسبوع، ما أنا؟', answer: 'نبأ', hint: 'كلمة تبدأ بالنون وتعني خبر'}
+  ]
+};
+
+// كلمات للبناء (محطة 4)
+const buildWords = {
+  easy: [
+    {word: 'نمر', letters: ['ن','م','ر']},
+    {word: 'نجم', letters: ['ن','ج','م']},
+    {word: 'نار', letters: ['ن','ا','ر']},
+    {word: 'نحل', letters: ['ن','ح','ل']}
+  ],
+  medium: [
+    {word: 'نمر', letters: ['ن','م','ر','ز','و']},
+    {word: 'نجم', letters: ['ن','ج','م','ت','ب']},
+    {word: 'نور', letters: ['ن','و','ر','ك','س']},
+    {word: 'نهر', letters: ['ن','ه','ر','ف','ي']}
+  ],
+  hard: [
+    {word: 'نسر', letters: ['ن','س','ر','ق','ط','ل']},
+    {word: 'نعناع', letters: ['ن','ع','ن','ا','ع','م','ك']},
+    {word: 'نرجس', letters: ['ن','ر','ج','س','ب','ت','و']},
+    {word: 'نبراس', letters: ['ن','ب','ر','ا','س','م','ك','ل']}
+  ]
+};
+
+// أسئلة محطة 5
+const finalChallenges = {
+  easy: [
+    {type: 'categories', title: '🐾 اذكر 3 حيوانات تبدأ بحرف النون', minWords: 3},
+    {type: 'categories', title: '🌳 اذكر 3 أشياء في الطبيعة تبدأ بحرف النون', minWords: 3},
+    {type: 'memory', pairs: 4}
+  ],
+  medium: [
+    {type: 'categories', title: '🍎 اذكر 4 أشياء تبدأ بحرف النون', minWords: 4},
+    {type: 'categories', title: '🏠 اذكر 3 أشياء في المنزل تحتوي حرف النون', minWords: 3},
+    {type: 'memory', pairs: 6}
+  ],
+  hard: [
+    {type: 'categories', title: '✨ اذكر 5 كلمات تبدأ بحرف النون (لا تكرار!)', minWords: 5},
+    {type: 'categories', title: '🌍 اذكر 4 أماكن جغرافية تبدأ بحرف النون', minWords: 4},
+    {type: 'memory', pairs: 8}
+  ]
+};
+
+const playerAvatars = ['🦁', '🦊', '🐼', '🦄', '🐯', '🐸'];
+const defaultNames = ['سائق 1', 'سائق 2', 'سائق 3', 'سائق 4'];
+
+// ============ حالة اللعبة ============
+let players = [];
+let currentPlayerIndex = 0;
+let currentStation = 0;
+let difficulty = 'medium';
+let roundData = {};
+let playerCount = 2;
+
+// جوائز خاصة
+let specialStats = {
+  fastest: {player: null, time: Infinity},
+  mostAccurate: {},
+  riddleMaster: {player: null, score: 0},
+  builder: {player: null, score: 0}
+};
+
+// ============ دوال مساعدة ============
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickRandom(arr, n) {
+  return shuffle(arr).slice(0, Math.min(n, arr.length));
+}
+
+function containsNun(word) {
+  return word.includes('ن');
+}
+
+function startsWithNun(word) {
+  return word.startsWith('ن');
+}
+
+function showFeedback(emoji) {
+  const f = document.createElement('div');
+  f.className = 'feedback-popup';
+  f.textContent = emoji;
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 1200);
+}
+
+function launchConfetti() {
+  const colors = ['#ffd600', '#c62828', '#1976d2', '#43a047', '#ff6f00', '#7b1fa2'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+
+function setConductorMsg(msg) {
+  document.getElementById('conductor-msg').textContent = msg;
+}
+
+function setDifficulty(d) {
+  difficulty = d;
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.diff-' + d).classList.add('active');
+}
+
+function renderPlayerInputs() {
+  const container = document.getElementById('player-inputs');
+  container.innerHTML = '';
+  for (let i = 0; i < playerCount; i++) {
+    const row = document.createElement('div');
+    row.className = 'player-input-row';
+    row.innerHTML = `
+      <div class="player-avatar">${playerAvatars[i]}</div>
+      <input type="text" id="player-name-${i}" placeholder="اسم الراكب ${i+1}" value="${defaultNames[i]}">
+      ${i >= 2 ? `<button class="btn btn-small btn-blue" onclick="removePlayer(${i})">❌</button>` : ''}
+    `;
+    container.appendChild(row);
+  }
+}
+
+function addPlayer() {
+  if (playerCount < 6) {
+    playerCount++;
+    renderPlayerInputs();
+  }
+}
+
+function removePlayer(i) {
+  if (playerCount > 2) {
+    playerCount--;
+    renderPlayerInputs();
+  }
+}
+
+function updateScoreboard() {
+  const sb = document.getElementById('scoreboard');
+  sb.innerHTML = '';
+  players.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'player-score-card' + (i === currentPlayerIndex ? ' active' : '');
+    card.innerHTML = `
+      <span class="p-avatar">${p.avatar}</span>
+      <div class="p-name">${p.name}</div>
+      <div class="p-score">${p.score}</div>
+      <div class="p-tickets">🎫 ${Math.floor(p.score/10)} تذكرة</div>
+    `;
+    sb.appendChild(card);
+  });
+}
+
+function updateRailway() {
+  const track = document.getElementById('railway-track');
+  track.innerHTML = '<div class="train-icon" id="train-icon">🚂</div>';
+  const icons = ['🎫', '🔊', '🧩', '🔨', '🏆'];
+  const names = ['تذكرة', 'نفق', 'ألغاز', 'ورشة', 'نهائي'];
+  
+  for (let i = 0; i < 5; i++) {
+    const station = document.createElement('div');
+    station.className = 'station';
+    if (i < currentStation) station.classList.add('passed');
+    else if (i === currentStation) station.classList.add('current');
+    station.innerHTML = `<span class="station-icon">${icons[i]}</span><div>${names[i]}</div>`;
+    station.id = 'station-' + i;
+    track.appendChild(station);
+  }
+  
+  // تحريك القطار
+  setTimeout(() => {
+    const currentStationEl = document.getElementById('station-' + currentStation);
+    const train = document.getElementById('train-icon');
+    if (currentStationEl && train) {
+      const trackRect = track.getBoundingClientRect();
+      const stationRect = currentStationEl.getBoundingClientRect();
+      train.style.right = (stationRect.right - trackRect.right + 20) + 'px';
+    }
+  }, 100);
+}
+
+function updateCurrentPlayerBanner() {
+  const banner = document.getElementById('current-player-banner');
+  const p = players[currentPlayerIndex];
+  banner.innerHTML = `${p.avatar} دور الراكب: <span style="color:#ffd600;">${p.name}</span> ${p.avatar}`;
+}
+
+function addPoints(playerIndex, points) {
+  players[playerIndex].score += points;
+  updateScoreboard();
+  if (points > 0) {
+    playCorrect();
+    showFeedback('+' + points);
+  }
+}
+
+function startJourney() {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  players = [];
+  for (let i = 0; i < playerCount; i++) {
+    const name = document.getElementById(`player-name-${i}`).value.trim() || defaultNames[i];
+    players.push({
+      name,
+      avatar: playerAvatars[i],
+      score: 0,
+      correctAnswers: 0,
+      wrongAnswers: 0,
+      totalTime: 0,
+      stationTimes: [],
+      riddleScore: 0,
+      builderScore: 0
+    });
+  }
+  
+  playTrainWhistle();
+  document.getElementById('start-screen').classList.remove('active');
+  document.getElementById('game-screen').classList.add('active');
+  
+  currentStation = 0;
+  currentPlayerIndex = 0;
+  startStation();
+}
+
+function startStation() {
+  updateScoreboard();
+  updateRailway();
+  updateCurrentPlayerBanner();
+  playStationStart();
+  
+  const stations = [
+    {
+      num: 'المحطة 1',
+      name: '🎫 تذكرة الدخول',
+      desc: 'اختر الكلمات التي تبدأ بحرف النون لتحصل على تذكرتك',
+      conductor: '🎫 أهلاً بكم! للحصول على تذكرة الصعود، عليكم تمييز كلمات النون!'
+    },
+    {
+      num: 'المحطة 2',
+      name: '🔊 نفق الأصوات',
+      desc: 'في الظلام، تميّز الكلمات التي تحتوي النون',
+      conductor: '🔊 الظلام يحيط بنا! ركزوا well لتمييز الكلمات!'
+    },
+    {
+      num: 'المحطة 3',
+      name: '🧩 جسر الألغاز',
+      desc: 'حل الألغاز لكلمات النون',
+      conductor: '🧩 الألغاز تنتظركم! فكروا جيداً!'
+    },
+    {
+      num: 'المحطة 4',
+      name: '🔨 ورشة البناء',
+      desc: 'ابنِ الكلمات من الحروف المبعثرة',
+      conductor: '🔨 حروف مبعثرة! ابنوا منها كلمات النون!'
+    },
+    {
+      num: 'المحطة 5',
+      name: '🏆 المحطة النهائية',
+      desc: 'التحدي الشامل: ذاكرة + سرعة + معرفة',
+      conductor: '🏆 المحطة الأخيرة! من سيكون قائد القطار؟'
+    }
+  ];
+  
+  const s = stations[currentStation];
+  document.getElementById('station-number').textContent = s.num;
+  document.getElementById('station-name').textContent = s.name;
+  document.getElementById('station-desc').textContent = s.desc;
+  setConductorMsg(s.conductor);
+  
+  // شارة الصعوبة
+  const badge = document.getElementById('difficulty-badge');
+  badge.className = 'difficulty-badge';
+  if (difficulty === 'easy') {
+    badge.textContent = '🌱 سهل';
+    badge.classList.add('diff-easy-badge');
+  } else if (difficulty === 'medium') {
+    badge.textContent = '🔥 متوسط';
+    badge.classList.add('diff-medium-badge');
+  } else {
+    badge.textContent = '💎 صعب';
+    badge.classList.add('diff-hard-badge');
+  }
+  
+  document.getElementById('next-player-btn').style.display = 'none';
+  loadStationContent();
+}
+
+function loadStationContent() {
+  const content = document.getElementById('station-content');
+  content.innerHTML = '';
+  
+  switch(currentStation) {
+    case 0: loadStation1(); break;
+    case 1: loadStation2(); break;
+    case 2: loadStation3(); break;
+    case 3: loadStation4(); break;
+    case 4: loadStation5(); break;
+  }
+}
+
+// ============ محطة 1: تذكرة الدخول ============
+function loadStation1() {
+  const nunPool = difficulty === 'easy' ? easyNunWords : 
+                  difficulty === 'medium' ? [...easyNunWords, ...mediumNunWords] :
+                  [...mediumNunWords, ...hardNunWords];
+  
+  const nunCount = difficulty === 'easy' ? 4 : difficulty === 'medium' ? 5 : 6;
+  const otherCount = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 4 : 5;
+  
+  const items = shuffle([...pickRandom(nunPool, nunCount), ...pickRandom(otherWords, otherCount)]);
+  roundData = {items, selected: new Set(), startTime: Date.now()};
+  
+  const content = document.getElementById('station-content');
+  content.innerHTML = `
+    <div style="text-align:center; font-size:1.2em; color:#c62828; font-weight:bold; margin-bottom:10px;">
+      🎫 اختر الكلمات التي تبدأ بحرف النون للحصول على تذكرتك:
+    </div>
+    <div class="ticket-grid" id="ticket-grid"></div>
+    <div style="text-align:center; margin-top:15px;">
+      <button class="btn btn-green" onclick="checkTickets()">✅ قدّم التذكرة</button>
+    </div>
+  `;
+  
+  const grid = document.getElementById('ticket-grid');
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'ticket-card';
+    card.id = 'tc-' + i;
+    card.innerHTML = `
+      <span class="ticket-emoji">${item.emoji}</span>
+      <div class="ticket-word">${item.word}</div>
+    `;
+    card.onclick = () => toggleTicket(i, card);
+    grid.appendChild(card);
+  });
+}
+
+function toggleTicket(i, el) {
+  playClick();
+  if (roundData.selected.has(i)) {
+    roundData.selected.delete(i);
+    el.classList.remove('selected');
+  } else {
+    roundData.selected.add(i);
+    el.classList.add('selected');
+  }
+}
+
+function checkTickets() {
+  const elapsed = (Date.now() - roundData.startTime) / 1000;
+  players[currentPlayerIndex].stationTimes.push(elapsed);
+  
+  let correct = 0;
+  let wrong = 0;
+  
+  roundData.selected.forEach(i => {
+    const item = roundData.items[i];
+    const el = document.getElementById('tc-' + i);
+    if (startsWithNun(item.word)) {
+      el.classList.add('correct-pick');
+      correct++;
+    } else {
+      el.classList.add('wrong-pick');
+      wrong++;
+    }
+  });
+  
+  // إظهار الكلمات الصحيحة التي لم تُختر
+  roundData.items.forEach((item, i) => {
+    if (startsWithNun(item.word) && !roundData.selected.has(i)) {
+      const el = document.getElementById('tc-' + i);
+      el.style.border = '4px dashed #2e7d32';
+      el.style.background = '#c8e6c9';
+    }
+  });
+  
+  const points = Math.max(0, correct * 10 - wrong * 5);
+  players[currentPlayerIndex].correctAnswers += correct;
+  players[currentPlayerIndex].wrongAnswers += wrong;
+  
+  if (points > 0) {
+    addPoints(currentPlayerIndex, points);
+    setConductorMsg(`🎫 تذكرة مقبولة! ${correct} صحيحة، ${wrong} خاطئة. +${points} نقطة!`);
+  } else {
+    playWrong();
+    setConductorMsg('🤔 تذكرة مرفوضة! حاول مرة أخرى في المرة القادمة!');
+  }
+  
+  // تحديث أسرع لاعب
+  if (correct > 0 && elapsed < specialStats.fastest.time) {
+    specialStats.fastest.player = currentPlayerIndex;
+    specialStats.fastest.time = elapsed;
+  }
+  
+  document.getElementById('next-player-btn').style.display = 'inline-block';
+}
+
+// ============ محطة 2: نفق الأصوات ============
+function loadStation2() {
+  const allNun = [...easyNunWords, ...mediumNunWords, ...hardNunWords];
+  const pool = difficulty === 'easy' ? easyNunWords : 
+               difficulty === 'medium' ? [...easyNunWords, ...mediumNunWords] :
+               allNun;
+  
+  const word = pickRandom(pool, 1)[0];
+  
+  // توليد خيارات
+  let options;
+  if (difficulty === 'easy') {
+    options = [
+      'تبدأ بحرف النون',
+      'تبدأ بحرف آخر',
+      'لا تحتوي النون'
+    ];
+  } else if (difficulty === 'medium') {
+    options = [
+      'النون في البداية',
+      'النون في الوسط',
+      'النون في النهاية',
+      'لا تحتوي النون'
+    ];
+  } else {
+    options = [
+      'النون في البداية',
+      'النون في الوسط',
+      'النون في النهاية',
+      'نونان في الكلمة',
+      'لا تحتوي النون'
+    ];
+  }
+  
+  // تحديد الإجابة الصحيحة
+  let correctAnswer;
+  const w = word.word;
+  if (w.startsWith('ن') && !w.substring(1).includes('ن')) {
+    correctAnswer = difficulty === 'easy' ? 0 : 0;
+  } else if (!w.startsWith('ن') && w.includes('ن')) {
+    correctAnswer = difficulty === 'easy' ? 1 : 1;
+  } else if (w.startsWith('ن') && w.substring(1).includes('ن')) {
+    correctAnswer = difficulty === 'easy' ? 0 : 3;
+  } else {
+    correctAnswer = difficulty === 'easy' ? 1 : options.length - 1;
+  }
+  
+  roundData = {word, correctAnswer, answered: false};
+  
+  const content = document.getElementById('station-content');
+  content.innerHTML = `
+    <div class="tunnel-scene">
+      <div class="sound-word-display">
+        <div style="font-size:3em;">${word.emoji}</div>
+        <div class="sound-word">${word.word}</div>
+        <div class="sound-question">🤔 أين يقع حرف النون في هذه الكلمة؟</div>
+      </div>
+      <div class="sound-options" id="sound-options"></div>
+    </div>
+  `;
+  
+  const optionsDiv = document.getElementById('sound-options');
+  options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'sound-option';
+    div.textContent = opt;
+    div.onclick = () => answerSound(i, div);
+    optionsDiv.appendChild(div);
+  });
+}
+
+function answerSound(i, el) {
+  if (roundData.answered) return;
+  roundData.answered = true;
+  
+  const options = document.querySelectorAll('.sound-option');
+  options.forEach((o, idx) => {
+    o.onclick = null;
+    if (idx === roundData.correctAnswer) o.classList.add('correct');
+    else if (idx === i) o.classList.add('wrong');
+  });
+  
+  if (i === roundData.correctAnswer) {
+    const points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 15 : 20;
+    addPoints(currentPlayerIndex, points);
+    players[currentPlayerIndex].correctAnswers++;
+    setConductorMsg(`🎯 إجابة ممتازة! +${points} نقاط!`);
+    showFeedback('🎯');
+  } else {
+    playWrong();
+    players[currentPlayerIndex].wrongAnswers++;
+    showFeedback('❌');
+    setConductorMsg('🤔 إجابة خاطئة! ركز أكثر في المرة القادمة!');
+  }
+  
+  document.getElementById('next-player-btn').style.display = 'inline-block';
+}
+
+// ============ محطة 3: جسر الألغاز ============
+function loadStation3() {
+  const riddle = pickRandom(riddles[difficulty], 1)[0];
+  roundData = {riddle, attempts: 0, maxAttempts: difficulty === 'easy' ? 3 : difficulty === 'medium' ? 2 : 1};
+  
+  const content = document.getElementById('station-content');
+  content.innerHTML = `
+    <div class="riddle-box">
+      <div class="riddle-icon">${riddle.icon}</div>
+      <div class="riddle-text">${riddle.text}</div>
+      <div class="riddle-hint">💡 تلميح: ${riddle.hint}</div>
+      <div style="margin-top:15px;">
+        <input type="text" id="riddle-answer" class="riddle-input" placeholder="اكتب الإجابة..." onkeypress="if(event.key==='Enter') checkRiddle()">
+      </div>
+      <button class="btn btn-green" onclick="checkRiddle()">✅ تحقق</button>
+      <div style="margin-top:10px; font-size:1em; color:#4a148c;">
+        المحاولات المتبقية: <span id="riddle-attempts">${roundData.maxAttempts}</span>
+      </div>
+    </div>
+  `;
+  
+  setTimeout(() => document.getElementById('riddle-answer').focus(), 100);
+}
+
+function checkRiddle() {
+  const input = document.getElementById('riddle-answer');
+  const answer = input.value.trim();
+  
+  if (!answer) return;
+  
+  // تطابق مرن
+  const correct = roundData.riddle.answer;
+  const isCorrect = answer === correct || 
+                    answer.includes(correct) || 
+                    correct.includes(answer);
+  
+  if (isCorrect) {
+    const points = difficulty === 'easy' ? 15 : difficulty === 'medium' ? 25 : 40;
+    addPoints(currentPlayerIndex, points);
+    players[currentPlayerIndex].riddleScore += points;
+    players[currentPlayerIndex].correctAnswers++;
+    setConductorMsg(`🧩 لغز محلول! إجابة رائعة: ${correct}! +${points} نقاط!`);
+    showFeedback('🧩');
+    input.disabled = true;
+    
+    if (players[currentPlayerIndex].riddleScore > specialStats.riddleMaster.score) {
+      specialStats.riddleMaster.player = currentPlayerIndex;
+      specialStats.riddleMaster.score = players[currentPlayerIndex].riddleScore;
+    }
+    
+    document.getElementById('next-player-btn').style.display = 'inline-block';
+  } else {
+    roundData.attempts++;
+    playWrong();
+    players[currentPlayerIndex].wrongAnswers++;
+    document.getElementById('riddle-attempts').textContent = roundData.maxAttempts - roundData.attempts;
+    
+    if (roundData.attempts >= roundData.maxAttempts) {
+      setConductorMsg(`🤔 الإجابة الصحيحة كانت: ${correct}`);
+      input.disabled = true;
+      document.getElementById('next-player-btn').style.display = 'inline-block';
+    } else {
+      setConductorMsg('🤔 حاول مرة أخرى!');
+      input.value = '';
+      input.focus();
+    }
+  }
+}
+
+// ============ محطة 4: ورشة البناء ============
+function loadStation4() {
+  const wordData = pickRandom(buildWords[difficulty], 1)[0];
+  roundData = {
+    word: wordData.word,
+    letters: shuffle(wordData.letters),
+    built: [],
+    startTime: Date.now()
+  };
+  
+  renderWorkshop();
+}
+
+function renderWorkshop() {
+  const content = document.getElementById('station-content');
+  content.innerHTML = `
+    <div class="workshop-scene">
+      <div style="text-align:center; font-size:1.2em; color:#5d4037; font-weight:bold; margin-bottom:10px;">
+        🔨 ابنِ الكلمة من الحروف المبعثرة!
+      </div>
+      
+      <div class="built-word-display" id="built-word">
+        ${roundData.built.length ? roundData.built.join(' ') : '...'}
+      </div>
+      
+      <div class="word-slots" id="word-slots"></div>
+      
+      <div class="letters-scatter" id="letters-scatter"></div>
+      
+      <div style="text-align:center; margin-top:15px;">
+        <button class="btn btn-blue btn-small" onclick="undoLetter()">↩️ تراجع</button>
+        <button class="btn btn-red btn-small" onclick="resetBuild()">🔄 إعادة</button>
+      </div>
+    </div>
+  `;
+  
+  // عرض الخانات
+  const slotsDiv = document.getElementById('word-slots');
+  for (let i = 0; i < roundData.word.length; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'word-slot';
+    slot.id = 'slot-' + i;
+    if (i < roundData.built.length) {
+      slot.textContent = roundData.built[i];
+      slot.classList.add('filled');
+    }
+    slotsDiv.appendChild(slot);
+  }
+  
+  // عرض الحروف
+  const scatterDiv = document.getElementById('letters-scatter');
+  roundData.letters.forEach((l, i) => {
+    const letter = document.createElement('div');
+    letter.className = 'scatter-letter';
+    letter.id = 'sl-' + i;
+    letter.textContent = l;
+    if (roundData.usedLetters && roundData.usedLetters.includes(i)) {
+      letter.classList.add('used');
+    }
+    letter.onclick = () => pickLetter(i, l);
+    scatterDiv.appendChild(letter);
+  });
+}
+
+function pickLetter(i, l) {
+  if (roundData.usedLetters && roundData.usedLetters.includes(i)) return;
+  if (!roundData.usedLetters) roundData.usedLetters = [];
+  
+  playClick();
+  roundData.built.push(l);
+  roundData.usedLetters.push(i);
+  
+  renderWorkshop();
+  
+  // التحقق من اكتمال الكلمة
+  if (roundData.built.length === roundData.word.length) {
+    checkBuiltWord();
+  }
+}
+
+function undoLetter() {
+  if (roundData.built.length === 0) return;
+  roundData.built.pop();
+  roundData.usedLetters.pop();
+  playClick();
+  renderWorkshop();
+}
+
+function resetBuild() {
+  roundData.built = [];
+  roundData.usedLetters = [];
+  playClick();
+  renderWorkshop();
+}
+
+function checkBuiltWord() {
+  const built = roundData.built.join('');
+  const slots = document.querySelectorAll('.word-slot');
+  
+  if (built === roundData.word) {
+    slots.forEach(s => s.classList.add('correct-slot'));
+    const elapsed = (Date.now() - roundData.startTime) / 1000;
+    const points = difficulty === 'easy' ? 15 : difficulty === 'medium' ? 25 : 40;
+    const timeBonus = Math.max(0, Math.floor(20 - elapsed));
+    const total = points + timeBonus;
+    
+    addPoints(currentPlayerIndex, total);
+    players[currentPlayerIndex].builderScore += total;
+    players[currentPlayerIndex].correctAnswers++;
+    
+    if (players[currentPlayerIndex].builderScore > specialStats.builder.score) {
+      specialStats.builder.player = currentPlayerIndex;
+      specialStats.builder.score = players[currentPlayerIndex].builderScore;
+    }
+    
+    setConductorMsg(`🔨 كلمة ممتازة: ${roundData.word}! +${total} نقاط (${timeBonus} مكافأة سرعة)!`);
+    showFeedback('🔨');
+    
+    setTimeout(() => {
+      document.getElementById('next-player-btn').style.display = 'inline-block';
+    }, 1000);
+  } else {
+    playWrong();
+    players[currentPlayerIndex].wrongAnswers++;
+    setConductorMsg('🤔 الكلمة غير صحيحة! حاول مرة أخرى!');
+    showFeedback('❌');
+    setTimeout(() => {
+      roundData.built = [];
+      roundData.usedLetters = [];
+      renderWorkshop();
+    }, 1200);
+  }
+}
+
+// ============ محطة 5: المحطة النهائية ============
+function loadStation5() {
+  const challenges = finalChallenges[difficulty];
+  roundData = {
+    challenges,
+    currentChallenge: 0,
+    startTime: Date.now()
+  };
+  
+  showFinalChallenge();
+}
+
+function showFinalChallenge() {
+  if (roundData.currentChallenge >= roundData.challenges.length) {
+    finishFinalStation();
+    return;
+  }
+  
+  const challenge = roundData.challenges[roundData.currentChallenge];
+  const content = document.getElementById('station-content');
+  
+  if (challenge.type === 'categories') {
+    content.innerHTML = `
+      <div class="final-scene">
+        <div class="final-challenge">
+          <div class="final-challenge-title">${challenge.title}</div>
+          <div class="final-input-row" id="final-inputs"></div>
+          <button class="btn btn-green" onclick="checkFinalCategory()">✅ تحقق</button>
+        </div>
+      </div>
+    `;
+    
+    const inputsDiv = document.getElementById('final-inputs');
+    for (let i = 0; i < challenge.minWords; i++) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'final-input';
+      input.placeholder = `كلمة ${i+1}`;
+      input.id = 'fi-' + i;
+      inputsDiv.appendChild(input);
+    }
+    setTimeout(() => document.getElementById('fi-0').focus(), 100);
+  } else if (challenge.type === 'memory') {
+    setupMemoryGame(challenge.pairs);
+  }
+}
+
+function checkFinalCategory() {
+  const challenge = roundData.challenges[roundData.currentChallenge];
+  let validCount = 0;
+  const usedWords = new Set();
+  
+  for (let i = 0; i < challenge.minWords; i++) {
+    const val = document.getElementById('fi-' + i).value.trim();
+    if (val && val.includes('ن') && !usedWords.has(val)) {
+      validCount++;
+      usedWords.add(val);
+    }
+  }
+  
+  if (validCount >= challenge.minWords) {
+    const points = difficulty === 'easy' ? 20 : difficulty === 'medium' ? 30 : 50;
+    addPoints(currentPlayerIndex, points);
+    players[currentPlayerIndex].correctAnswers++;
+    setConductorMsg(`✨ تحدي رائع! ${validCount} كلمات صحيحة! +${points} نقاط!`);
+    showFeedback('✨');
+    roundData.currentChallenge++;
+    setTimeout(showFinalChallenge, 1500);
+  } else {
+    playWrong();
+    players[currentPlayerIndex].wrongAnswers++;
+    showFeedback('❌');
+    setConductorMsg(`🤔 تحتاج ${challenge.minWords} كلمات تحتوي النون! لديك ${validCount} فقط.`);
+  }
+}
+
+function setupMemoryGame(pairs) {
+  const nunWords = [...easyNunWords, ...mediumNunWords];
+  const selected = pickRandom(nunWords, pairs);
+  const cards = [];
+  selected.forEach(w => {
+    cards.push({type: 'emoji', value: w.emoji, pairId: w.word});
+    cards.push({type: 'word', value: w.word, pairId: w.word});
+  });
+  
+  roundData.memory = {
+    cards: shuffle(cards),
+    flipped: [],
+    matched: new Set(),
+    attempts: 0,
+    pairs
+  };
+  
+  renderMemory();
+}
+
+function renderMemory() {
+  const content = document.getElementById('station-content');
+  const m = roundData.memory;
+  
+  content.innerHTML = `
+    <div class="final-scene">
+      <div class="final-challenge">
+        <div class="final-challenge-title">🧠 لعبة الذاكرة: طابق الصورة بالكلمة!</div>
+        <div style="font-size:1em; color:#5d4037; margin-bottom:10px;">
+          المحاولات: <span id="memory-attempts">${m.attempts}</span> | الأزواج: <span id="memory-matched">${m.matched.size/2}</span>/${m.pairs}
+        </div>
+        <div class="memory-grid" id="memory-grid"></div>
+      </div>
+    </div>
+  `;
+  
+  const grid = document.getElementById('memory-grid');
+  m.cards.forEach((card, i) => {
+    const div = document.createElement('div');
+    div.className = 'memory-card';
+    div.id = 'mc-' + i;
+    
+    if (m.matched.has(i)) {
+      div.classList.add('matched');
+      div.textContent = card.value;
+    } else if (m.flipped.includes(i)) {
+      div.classList.add('flipped');
+      div.textContent = card.value;
+    } else {
+      div.textContent = '؟';
+    }
+    
+    div.onclick = () => flipMemoryCard(i);
+    grid.appendChild(div);
+  });
+}
+
+function flipMemoryCard(i) {
+  const m = roundData.memory;
+  if (m.matched.has(i) || m.flipped.includes(i) || m.flipped.length >= 2) return;
+  
+  playClick();
+  m.flipped.push(i);
+  renderMemory();
+  
+  if (m.flipped.length === 2) {
+    m.attempts++;
+    const [a, b] = m.flipped;
+    const cardA = m.cards[a];
+    const cardB = m.cards[b];
+    
+    if (cardA.pairId === cardB.pairId && cardA.type !== cardB.type) {
+      // تطابق
+      setTimeout(() => {
+        m.matched.add(a);
+        m.matched.add(b);
+        m.flipped = [];
+        playMatch();
+        renderMemory();
+        
+        document.getElementById('memory-attempts').textContent = m.attempts;
+        document.getElementById('memory-matched').textContent = m.matched.size/2;
+        
+        if (m.matched.size === m.cards.length) {
+          finishMemoryGame();
+        }
+      }, 600);
+    } else {
+      // لا تطابق
+      setTimeout(() => {
+        m.flipped = [];
+        renderMemory();
+        document.getElementById('memory-attempts').textContent = m.attempts;
+      }, 1000);
+    }
+  }
+}
+
+function finishMemoryGame() {
+  const attempts = roundData.memory.attempts;
+  const pairs = roundData.memory.pairs;
+  const efficiency = pairs / attempts;
+  
+  let points;
+  if (efficiency > 0.7) points = difficulty === 'easy' ? 30 : difficulty === 'medium' ? 50 : 80;
+  else if (efficiency > 0.4) points = difficulty === 'easy' ? 20 : difficulty === 'medium' ? 35 : 60;
+  else points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 40;
+  
+  addPoints(currentPlayerIndex, points);
+  players[currentPlayerIndex].correctAnswers++;
+  setConductorMsg(`🧠 ذاكرة ممتازة! أنهِيت اللعبة في ${attempts} محاولة! +${points} نقاط!`);
+  showFeedback('🧠');
+  
+  roundData.currentChallenge++;
+  setTimeout(showFinalChallenge, 1800);
+}
+
+function finishFinalStation() {
+  const elapsed = (Date.now() - roundData.startTime) / 1000;
+  players[currentPlayerIndex].stationTimes.push(elapsed);
+  
+  setConductorMsg('🏆 أحسنت! أنهيت المحطة النهائية!');
+  playTrainWhistle();
+  launchConfetti();
+  document.getElementById('next-player-btn').style.display = 'inline-block';
+}
+
+// ============ التنقل ============
+function nextPlayer() {
+  playTrainWheels();
+  currentPlayerIndex++;
+  
+  if (currentPlayerIndex >= players.length) {
+    currentPlayerIndex = 0;
+    currentStation++;
+    
+    if (currentStation >= 5) {
+      endJourney();
+      return;
+    }
+  }
+  
+  updateCurrentPlayerBanner();
+  updateScoreboard();
+  updateRailway();
+  loadStationContent();
+}
+
+function endJourney() {
+  playWin();
+  launchConfetti();
+  setTimeout(launchConfetti, 600);
+  setTimeout(launchConfetti, 1200);
+  
+  document.getElementById('game-screen').classList.remove('active');
+  document.getElementById('results-screen').classList.add('active');
+  
+  const sorted = [...players].sort((a, b) => b.score - a.score);
+  const winner = sorted[0];
+  
+  document.getElementById('winner-name').textContent = winner.avatar + ' ' + winner.name + ' ' + winner.avatar;
+  
+  if (sorted.length > 1 && sorted[0].score === sorted[1].score) {
+    document.getElementById('winner-title').textContent = '🤝 تعادل في قمة القطار! 🤝';
+  }
+  
+  // الترتيب
+  const ranking = document.getElementById('final-ranking');
+  ranking.innerHTML = '';
+  const medals = ['🥇', '🥈', '🥉', '🏅', '🎖️', '🎗️'];
+  sorted.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'rank-card';
+    card.innerHTML = `
+      <span class="rank-medal">${medals[i] || '🏅'}</span>
+      <div class="rank-avatar">${p.avatar}</div>
+      <div class="rank-name">${p.name}</div>
+      <div class="rank-score">${p.score} 🎫</div>
+    `;
+    ranking.appendChild(card);
+  });
+  
+  // الجوائز الخاصة
+  const awards = document.getElementById('special-awards');
+  awards.innerHTML = '';
+  
+  // أسرع لاعب
+  if (specialStats.fastest.player !== null) {
+    const p = players[specialStats.fastest.player];
+    awards.innerHTML += `
+      <div class="award-card" style="border-color: #fb8c00;">
+        <span class="award-icon">⚡</span>
+        <div class="award-title">أسرع راكب</div>
+        <div class="award-winner" style="color:#e65100;">${p.avatar} ${p.name}</div>
+      </div>
+    `;
+  }
+  
+  // سيد الألغاز
+  if (specialStats.riddleMaster.player !== null) {
+    const p = players[specialStats.riddleMaster.player];
+    awards.innerHTML += `
+      <div class="award-card" style="border-color: #7b1fa2;">
+        <span class="award-icon">🧩</span>
+        <div class="award-title">سيد الألغاز</div>
+        <div class="award-winner" style="color:#6a1b9a;">${p.avatar} ${p.name}</div>
+      </div>
+    `;
+  }
+  
+  // أفضل بنّاء
+  if (specialStats.builder.player !== null) {
+    const p = players[specialStats.builder.player];
+    awards.innerHTML += `
+      <div class="award-card" style="border-color: #5d4037;">
+        <span class="award-icon">🔨</span>
+        <div class="award-title">أفضل بنّاء</div>
+        <div class="award-winner" style="color:#5d4037;">${p.avatar} ${p.name}</div>
+      </div>
+    `;
+  }
+  
+  // الأكثر دقة
+  const accuracySorted = [...players].map(p => ({
+    ...p,
+    accuracy: p.correctAnswers / Math.max(1, p.correctAnswers + p.wrongAnswers)
+  })).sort((a, b) => b.accuracy - a.accuracy);
+  
+  if (accuracySorted[0].accuracy > 0.5) {
+    awards.innerHTML += `
+      <div class="award-card" style="border-color: #43a047;">
+        <span class="award-icon">🎯</span>
+        <div class="award-title">الأكثر دقة</div>
+        <div class="award-winner" style="color:#2e7d32;">${accuracySorted[0].avatar} ${accuracySorted[0].name}</div>
+      </div>
+    `;
+  }
+  
+  // شهادة راكب
+  awards.innerHTML += `
+    <div class="award-card" style="border-color: #ffd600; background: linear-gradient(135deg, #fff9c4, #fff);">
+      <span class="award-icon">🎫</span>
+      <div class="award-title">شهادة راكب</div>
+      <div class="award-winner" style="color:#ff6f00;">لجميع الركاب 🎉</div>
+    </div>
+  `;
+}
+
+// ============ التهيئة ============
+renderPlayerInputs();
+</script>
+
+</body>
+</html>
